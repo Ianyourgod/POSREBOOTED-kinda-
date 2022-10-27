@@ -1,10 +1,10 @@
 class comp:
     def __init__(self,c_drive_name="C") -> None:
         self.regs = [0,0,0,0,0,0,0,0]
-        self.prgm = [9,0,72,0,9,1,101,0,9,2,108,0,9,3,111,0,10,0,0,0,8,0,0,0,10,0,1,0,8,0,0,0,10,0,2,0,8,0,0,0,8,0,0,0,10,0,3,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        self.prgm = [12,2,0,0,75,0,1,0,8,0,0,0,129,1,1,1,32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
         self.CLEARRAM = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
         self.ram = [
-            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+            116,101,115,116,46,112,121,97,115,109,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -89,47 +89,48 @@ class comp:
         elif cmd == 7:
             print(self.regs[a1])
         elif cmd == 8:
-            print(chr(self.regs[a1]))
+            print(chr(self.regs[a1]),end="")
         elif cmd == 9:
             self.ram[a1]=a2
         elif cmd == 10:
             self.regs[a1] = self.ram[a2]
+        elif cmd == 11:
+            fnl = [chr(i) for i in self.ram if i != 0]
+            fn = ""
+            for a in fnl:
+                fn += a
+            f = open(fn,"r")
+            contents = f.read()
+            self.regs[a1]=ord(contents[a2])
+            f.close()
+        elif cmd == 12:
+            fnl = [chr(i) for i in self.ram if i != 0]
+            fn = ""
+            for a in fnl:
+                fn += a
+            f = open(fn,"r")
+            contents = f.read()
+            self.regs[a1]=len(contents)
+            f.close()
         elif cmd == 32 and a1 == a2:
-            self.regs[6] = a3
+            self.regs[6] = a3*4-4
         elif cmd == 33 and a1 != a2:
-            self.regs[6] = a3
+            self.regs[6] = a3*4-4
         elif cmd == 34 and a1 < a2:
-            self.regs[6] = a3
+            self.regs[6] = a3*4-4
         elif cmd == 35 and a1 <= a2:
-            self.regs[6] = a3
+            self.regs[6] = a3*4-4
         elif cmd == 36 and a1 > a2:
-            self.regs[6] = a3
+            self.regs[6] = a3*4-4
         elif cmd == 37 and a1 >= a2:
-            self.regs[6] = a3
+            self.regs[6] = a3*4-4
     def runPrgm(self):
         while self.regs[6] < len(self.prgm):
             i = self.regs[6]
             self.runLine(i)
             self.regs[6] += 4
-class AsmInterpreter:
-    def __init__(self) -> None:
-        pass
-    def _parseLine(self,line):
-        tokens = []
-        token = ""
-        
-        for i in line:
-            if i == " ":
-                tokens.append(tokens)
-            else:
-                token += i
-        
-        return tokens
-    def runLine(self,line):
-        tokens = self._parseLine(line)
-        if tokens[0] == "MOVE":
-            pass
-myComp = comp()
-myComp.runPrgm()
-print(f"{myComp.regs}") # this is f-string for debugging purposes
-#print("" if myComp.ram == myComp.CLEARRAM else myComp.ram,end="")
+if __name__ == "__main__":
+    myComp = comp()
+    myComp.runPrgm()
+    print(f"{myComp.regs}") # this is f-string for debugging purposes
+    #print("" if myComp.ram == myComp.CLEARRAM else myComp.ram,end="")
